@@ -14,7 +14,8 @@
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
-    "lodash": "4.17.10"
+    "lodash": "4.17.10",
+    "mocha": "^5.2.0"
   },
   "babel": {
     "presets": [
@@ -22,6 +23,7 @@
     ]
   },
   "scripts": {
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "test": "mocha"
   }
 }
