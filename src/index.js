@@ -1,6 +1,6 @@
-var generator = require('@babel/generator').default;
+export default function({ types: t }) {
+  var generator = require('@babel/generator').default;
 
-module.exports = function(babel) {
   return {
     visitor: {
       ArrowFunctionExpression(path) {

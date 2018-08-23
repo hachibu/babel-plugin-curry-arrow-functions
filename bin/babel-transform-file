@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var babel = require('babel-core');
-var plugin = require('../index');
+var plugin = require('../dist/index').default;
 
 var filepath = process.argv[2];
 var options = {

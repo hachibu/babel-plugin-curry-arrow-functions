@@ -1,5 +1,19 @@
-# babel-plugin-curry-arrow-functions
+# Babel Plugin Curry Arrow Functions
 
-Experimental Babel plugin to curry arrow functions.
+A Babel plugin to curry arrow functions.
 
-    bin/transform examples/add.js
+## Example
+
+### Input
+```js
+var add = (a, b) => a + b;
+```
+
+### Output
+```js
+var add = function (a) {
+  return function (b) {
+    return a + b;
+  };
+};
+```

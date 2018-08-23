@@ -1,14 +1,27 @@
 {
   "name": "babel-plugin-curry-arrow-functions",
+  "description": "Curry arrow functions",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hachibu/babel-plugin-curry-arrow-functions.git"
+  },
   "dependencies": {
     "@babel/generator": "7.0.0-rc.2",
     "@babel/parser": "7.0.0-rc.2",
-    "babel-core": "6.26.3"
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.3",
+    "babel-preset-env": "1.7.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   },
   "scripts": {
-    "transform": "bin/transform"
+    "build": "babel src -d dist",
+    "transform-file": "bin/babel-transform-file"
   }
 }
