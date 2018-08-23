@@ -9,7 +9,7 @@ export default function({ types: t }) {
       ArrowFunctionExpression(path) {
         let { node } = path;
 
-        if (_.isEmpty(node.params)) {
+        if (node.params.length < 2) {
           return;
         }
 

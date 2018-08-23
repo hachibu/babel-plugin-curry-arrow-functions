@@ -17,7 +17,7 @@ exports.default = function (_ref) {
         var node = path.node;
 
 
-        if (_lodash2.default.isEmpty(node.params)) {
+        if (node.params.length < 2) {
           return;
         }
 
