@@ -1,0 +1,1 @@
+# babel-plugin-curry-arrow-functions
