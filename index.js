@@ -8,6 +8,10 @@ module.exports = function(babel) {
         let params = node.params.map(param => generator(param).code);
         let code = '';
 
+        if (node.params.length === 0) {
+          return;
+        }
+
         params.forEach((arg, i) => {
           code += `function (${arg}) { `;
           if (i < params.length - 1) {
