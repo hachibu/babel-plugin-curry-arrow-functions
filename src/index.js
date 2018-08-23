@@ -1,30 +1,36 @@
+import generate from 'babel-generator';
+import _ from 'lodash';
+
 export default function({ types: t }) {
-  var generator = require('@babel/generator').default;
+  const generateCode = (ast) => generate(ast).code;
 
   return {
     visitor: {
       ArrowFunctionExpression(path) {
-        let node = path.node;
-        let params = node.params.map(param => generator(param).code);
-        let code = '';
+        let { node } = path;
 
-        if (node.params.length === 0) {
+        if (_.isEmpty(node.params)) {
           return;
         }
 
-        params.forEach((arg, i) => {
-          code += `function (${arg}) { `;
-          if (i < params.length - 1) {
-            code += 'return ';
+        let source = '';
+        let paramCodes = _.map(node.params, generateCode);
+        let bodyCode = generateCode(node.body);
+
+        _.each(paramCodes, (paramCode, i) => {
+          source += `function (${paramCode}) {`;
+          if (i < paramCodes.length - 1) {
+            source += 'return ';
           }
         });
-        if (node.body.type !== 'BlockStatement') {
-          code += 'return ';
-        }
-        code += generator(node.body).code;
-        params.forEach(a => code += ' }');
 
-        path.replaceWithSourceString(code);
+        source += node.body.type === 'BlockStatement'
+                ? bodyCode
+                : `return ${bodyCode}`;
+
+        _.times(paramCodes.length, () => source += '}');
+
+        path.replaceWithSourceString(source);
       }
     }
   };

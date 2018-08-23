@@ -7,39 +7,51 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (_ref) {
   var t = _ref.types;
 
-  var generator = require('@babel/generator').default;
+  var generateCode = function generateCode(ast) {
+    return (0, _babelGenerator2.default)(ast).code;
+  };
 
   return {
     visitor: {
       ArrowFunctionExpression: function ArrowFunctionExpression(path) {
         var node = path.node;
-        var params = node.params.map(function (param) {
-          return generator(param).code;
-        });
-        var code = '';
 
-        if (node.params.length === 0) {
+
+        if (_lodash2.default.isEmpty(node.params)) {
           return;
         }
 
-        params.forEach(function (arg, i) {
-          code += 'function (' + arg + ') { ';
-          if (i < params.length - 1) {
-            code += 'return ';
+        var source = '';
+        var paramCodes = _lodash2.default.map(node.params, generateCode);
+        var bodyCode = generateCode(node.body);
+
+        _lodash2.default.each(paramCodes, function (paramCode, i) {
+          source += 'function (' + paramCode + ') {';
+          if (i < paramCodes.length - 1) {
+            source += 'return ';
           }
         });
-        if (node.body.type !== 'BlockStatement') {
-          code += 'return ';
-        }
-        code += generator(node.body).code;
-        params.forEach(function (a) {
-          return code += ' }';
+
+        source += node.body.type === 'BlockStatement' ? bodyCode : 'return ' + bodyCode;
+
+        _lodash2.default.times(paramCodes.length, function () {
+          return source += '}';
         });
 
-        path.replaceWithSourceString(code);
+        path.replaceWithSourceString(source);
       }
     }
   };
 };
+
+var _babelGenerator = require('babel-generator');
+
+var _babelGenerator2 = _interopRequireDefault(_babelGenerator);
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 ;
