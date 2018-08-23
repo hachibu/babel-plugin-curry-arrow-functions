@@ -23,7 +23,7 @@
     ]
   },
   "scripts": {
-    "build": "babel src -d dist",
-    "test": "mocha"
+    "build": "yarn babel src -d dist",
+    "test": "yarn build && yarn mocha --require babel-core/register"
   }
 }
