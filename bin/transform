@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var babel = require('babel-core');
+var plugin = require('../index');
+
+var filepath = process.argv[2];
+var options = {
+  plugins: [plugin]
+};
+
+babel.transformFile(filepath, options, (err, result) => {
+  if(err) { throw err; }
+  console.log(result.code);
+});

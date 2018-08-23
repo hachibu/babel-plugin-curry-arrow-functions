@@ -1,0 +1,14 @@
+{
+  "name": "babel-plugin-curry-arrow-functions",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/generator": "7.0.0-rc.2",
+    "@babel/parser": "7.0.0-rc.2",
+    "babel-core": "6.26.3"
+  },
+  "scripts": {
+    "transform": "bin/transform"
+  }
+}
