@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-curry-arrow-functions",
-  "description": "Curry arrow functions",
+  "description": "A Babel plugin to curry arrow functions.",
   "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
@@ -22,7 +22,6 @@
     ]
   },
   "scripts": {
-    "build": "babel src -d dist",
-    "transform-file": "bin/babel-transform-file"
+    "build": "babel src -d dist"
   }
 }
