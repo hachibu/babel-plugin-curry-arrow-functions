@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 
-var babel = require('babel-core');
-var plugin = require('../dist/index').default;
+var fs     = require('fs'),
+    babel  = require('babel-core'),
+    plugin = require('../dist/index').default;
+
+function exitUnless(cond, message) {
+  if (cond) { return; }
+  console.log('Error:', message);
+  process.exit(1);
+}
 
 var filepath = process.argv[2];
-var options = {
-  plugins: [plugin]
-};
 
-babel.transformFile(filepath, options, (err, result) => {
-  if(err) { throw err; }
-  console.log(result.code);
-});
+exitUnless(filepath, 'filepath argument missing');
+exitUnless(fs.existsSync(filepath), 'file does not exist');
+
+var result = babel.transformFileSync(filepath, { plugins: [plugin] });
+
+console.log(result.code);

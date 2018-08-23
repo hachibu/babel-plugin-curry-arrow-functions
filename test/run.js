@@ -9,13 +9,18 @@ var paths = _(fs.readdirSync('test'))
   .filter(path => fs.lstatSync(path).isDirectory())
   .value();
 
-describe('plugin', () => {
-  _.each(paths, (path) => {
-    it(`should transform ${path}`, () => {
-      var input = babel.transformFileSync(`${path}/input.js`, {
-        plugins: [plugin]
-      });
-      var output = _.trim(fs.readFileSync(`${path}/output.js`, 'utf-8'));
+describe('plugin', function() {
+  _.each(paths, function(path) {
+    it(`should transform ${path}`, function() {
+      var inputPath = `${path}/input.js`,
+          outputPath = `${path}/output.js`;
+
+      if (!fs.existsSync(inputPath) || !fs.existsSync(outputPath)) {
+        this.skip();
+      }
+
+      var input = babel.transformFileSync(inputPath, { plugins: [plugin] }),
+          output = _.trim(fs.readFileSync(outputPath, 'utf-8'));
 
       assert.equal(input.code, output);
     });
