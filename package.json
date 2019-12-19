@@ -9,13 +9,13 @@
     "url": "https://github.com/hachibu/babel-plugin-curry-arrow-functions.git"
   },
   "dependencies": {
-    "@babel/generator": "7.0.0-rc.2",
-    "@babel/parser": "7.0.0-rc.2",
+    "@babel/generator": "7.7.7",
+    "@babel/parser": "7.7.7",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
-    "lodash": "4.17.10",
-    "mocha": "^5.2.0"
+    "lodash": "4.17.15",
+    "mocha": "^6.2.2"
   },
   "babel": {
     "presets": [
