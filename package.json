@@ -1,29 +1,27 @@
 {
   "name": "babel-plugin-curry-arrow-functions",
-  "description": "A Babel plugin to curry arrow functions.",
+  "description": "Babel plugin to curry arrow functions",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/hachibu/babel-plugin-curry-arrow-functions.git"
   },
   "dependencies": {
-    "@babel/generator": "7.7.7",
-    "@babel/parser": "7.7.7",
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.3",
-    "babel-preset-env": "1.7.0",
-    "lodash": "4.17.15",
-    "mocha": "^6.2.2"
-  },
-  "babel": {
-    "presets": [
-      "env"
-    ]
+    "@babel/cli": "7.10.1",
+    "@babel/core": "7.10.2",
+    "@babel/generator": "7.10.2",
+    "@babel/parser": "7.10.2",
+    "@babel/preset-env": "7.10.2",
+    "@babel/register": "7.10.1",
+    "mocha": "8.0.1"
   },
   "scripts": {
-    "build": "yarn babel src -d dist",
-    "test": "yarn build && yarn mocha --require babel-core/register"
+    "build": "babel src -d lib",
+    "test": "yarn build && mocha --require @babel/register"
+  },
+  "babel": {
+    "presets": ["@babel/preset-env"]
   }
 }

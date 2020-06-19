@@ -1,37 +1,32 @@
-import generate from 'babel-generator';
-import _ from 'lodash';
+export default ({ types: t }) => {
+  let mkBody = node => t.blockStatement([t.returnStatement(node)]);
+  let mkArrow = (...params) => t.arrowFunctionExpression(params, mkBody());
 
-export default function({ types: t }) {
-  const generateCode = (ast) => generate(ast).code;
+  let visitor = {
+    ArrowFunctionExpression(path) {
+      let { node } = path;
 
-  return {
-    visitor: {
-      ArrowFunctionExpression(path) {
-        let { node } = path;
-
-        if (node.params.length < 2) {
-          return;
-        }
-
-        let source = '';
-        let paramCodes = _.map(node.params, generateCode);
-        let bodyCode = generateCode(node.body);
-
-        _.each(paramCodes, (paramCode, i) => {
-          source += `function (${paramCode}) {`;
-          if (i < paramCodes.length - 1) {
-            source += 'return ';
-          }
-        });
-
-        source += node.body.type === 'BlockStatement'
-                ? bodyCode
-                : `return ${bodyCode}`;
-
-        _.times(paramCodes.length, () => source += '}');
-
-        path.replaceWithSourceString(source);
+      if (path.node.params.length < 2) {
+        return;
       }
+
+      let head, tail;
+
+      node.params.forEach(param => {
+        if (!tail) {
+          head = tail = mkArrow(param);
+        } else {
+          let arrow = mkArrow(param);
+          tail.body = mkBody(arrow);
+          tail = arrow;
+        }
+      });
+
+      tail.body = node.body;
+
+      path.replaceWith(head);
     }
   };
+
+  return { visitor };
 };

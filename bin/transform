@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+let babel  = require('@babel/core'),
+    plugin = require('../lib/index').default;
+
+let filepath = process.argv[2];
+let result = babel.transformFileSync(filepath, { plugins: [plugin] });
+
+console.log(result.code);

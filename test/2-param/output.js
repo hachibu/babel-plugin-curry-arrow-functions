@@ -5,13 +5,13 @@
     return a + b;
   };
 });
+
 (function (a) {
   return function (b) {
-    {
-      return a + b;
-    }
+    return a + b;
   };
 });
+
 (function () {
   var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
   return function () {
